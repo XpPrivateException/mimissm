@@ -1,0 +1,48 @@
+米米商城ssm整合项目：
+1、新建Maven工程，搭建项目环境（mvc、pom.xml）
+    包结构、web.xml文件、项目结构、index
+    tomcat服务器
+2、添加依赖：
+    junit、spring、springweb、mybatis、mybatis-spring
+    mysql、druid、
+    servlet、jsp、jstl、jackson
+3、resouces资源整合：
+    jdbc.properties、spring-dao、spring-service、spring-mvc
+    applicationContext总文件导入三层架构文件
+4、分页插件配置：sqlMapConfig.xml
+    com.github.pagehelper.PageInterceptor
+    必须放在package之上
+5、生成domain实体类和dao层mapper
+
+6、开发业务逻辑层service、实现登录判断功能
+7、控制器AdminAction，处理请求
+    (1)前端页面发起登录请求
+    (2)三层架构实现权限验证
+
+------------------------------------------------
+商品信息的分页查询：
+1、每页显示5条
+2、总共多少页、当前第几页
+3、当前页的页码背景css样式设置
+
+新增商品时，商品pimage字段
+1、视频采用了后端全局变量，我觉得实在太过笨比了，所以在前端传过去
+2、用隐藏域，在选择完图片后给他赋值
+3、在controller采用String和对象一起接收商品信息，并进行非空处理
+4、这里的图片，如果在添加时不选择图片会默认为空串，可能会导致后续修改时
+    发生空指针异常，应该在前端页面进行非空限制（不想弄前端就没做）
+
+更新商品，商品的pimage字段
+2、准备修改前段时发现这个资料的前端设置了三个hidden隐藏域
+3、在update.jsp页面，提交图片的ajax路径需要修改为项目路径
+4、controller中直接接收整个ProductInfo对象，调用service修改即可
+
+删除商品：
+1、前端的javascript代码中，没有用ajax发起异步请求
+2、选择按照这个前端页面来继续，在controller层，用request携带msg
+    请求转发回到split页面
+
+这个项目，做到了条件查询（P80）
+刚做好前端的ajax请求，然后无法刷新商品列表
+controller及service层修改为返回分页对象即可
+烂尾啦 有空再回来继续吧

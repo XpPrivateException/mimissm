@@ -1,0 +1,19 @@
+1、关于商品信息的分页查询：
+    BUG：分页查询完成后，点击为空白，测试list有值
+    原因，一开始在主页面时，视频为了演示用了查询所有商品信息的方法
+        将点击发起的请求修改为了getAll.action
+    解决：修改为原来的split.action，将请求发送给控制器正确的方法
+
+2、分页查询点击页数，跳转的页面空白：
+    bug：取得list数据且成功跳转，但前端页面不展示
+    原因：ajax成功后的刷新路径问题
+    解决：request.getContextPath，获取项目根路径，再拼接后续
+
+3、监听器实现商品类别数据字典：
+    bug：service层空指针
+    原因：依赖注入失效，这个Listener类并不是由Spring进行创建和管理
+        服务器Tomcat在注册Listener时无法识别注解赋值
+        监听器优先于IoC先执行
+    解决：Service层归属于在Spring的单例池里
+        只要实现Listener的service层属性有值即可
+        为了让ProductTypeListener类独立，采用web.xml注册，不使用注解
